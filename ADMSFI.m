@@ -9,21 +9,19 @@ function MFGAF = ADMSFI(data, delta)
     end
 
     En = zeros(m, m);
-    r = cell(1, m);  % 使用 cell 数组存储每个 r1，而不是三维矩阵
+    r = cell(1, m);  
 
     for j = 1:m
         r{j} = mfgad_rm(data(:, j), varepsilon(j)); 
     end
     
-    % 计算 En，不再存储所有中间的 R
     for i = 1:m
         for j = 1:m
-            R_sum = matrixOperation(r{i}, r{j});  % 直接计算每对矩阵的结果
+            R_sum = matrixOperation(r{i}, r{j});  
             En(i, j) = -(1 / n) * sum(log2(sum(R_sum, 2) / n));
         end
     end
 
-    % 继续处理其他步骤
     RE = zeros(n, m);
     for i = 1:m
         [~, En_de] = sort(En(i, :), 'descend');
